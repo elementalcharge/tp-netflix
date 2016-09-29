@@ -5,9 +5,11 @@ Const
         MAX_EPISODIOS_POR_TEMPORADA = 20;
         MAX_TEMPORADAS_POR_SERIE = 5;
         MAX_SERIES = 5;
+        MAX_VISUALIZACIONES_POR_USUARIO = 1000;
+        REGLAS_VISUALIZACIONES = 150 * 0.01 + 5 * 0.01 + 4 * 0.03 + 3 * 0.05 + 2 * 0.1 
 
 type
-        usuarios = array[1..MAX_USUARIOS] of string[8];
+        
 
         videos = record
                 titulo: string[72];
@@ -32,6 +34,20 @@ type
                 end;
 
         series = array[1..MAX_SERIES] of serie;
+
+        recordDeVisualizaciones = record
+                posSerieArreglo : longint;
+                temporadaDeLaSerie : byte;
+                cantEpisodiosTemporada : byte;
+                CantVisualizaciones : byte;
+                end;
+
+        informacionUsuario = record
+                recordVisualizaciones : recordDeVisualizaciones;
+                usuarios : string[8];
+                end;
+
+        ArrayInfoPorUsuario = Array[1..MAX_VISUALIZACIONES_POR_USUARIO] of informacionUsuario;
 
         procedure cargar_datos(var metaData: series, var usuarioDefault: usuarios);
         begin
@@ -85,20 +101,35 @@ type
                 metaData[1].DatosTemporada[2].datosDelVideo[5].visualizaciones:= 0;
         end;
 
+        procedure cargar_visualizaciones(var seriesCargadas, var usuario);
+        begin
+            if length(seriesCargadas) > 0 then
+            
+            begin
+                readln(nroVisualizacionesAGenerar);
+                for i to nroVisualizacionesAGenerar do 
+                begin
+                    temporadaValida = Random(2);
+                    episodioValido = Random(5);
+                    Inc(seriesCargadas[serieAcargar].DatosTemporada[temporadaValida].datosDelVideo[episodioValido].visualizaciones,  REGLAS_VISUALIZACIONES);
+                    usuario.recordVisualizaciones.CantVisualizaciones = seriesCargadas[serieAcargar].DatosTemporada[temporadaValida].datosDelVideo[episodioValido].visualizaciones;
+                end;
+            end;
+        end;
+
+
 var
    cargaDeSeries : array[1..MAX_SERIES] of serie;
-   usuariosRegistrados: array[1..MAX_USUARIOS] of usuarios
+   usuariosRegistrados: array[1..MAX_USUARIOS] of ArrayInfoPorUsuario
    a, b : integer;
    inicioDePrograma: integer;
 
 begin
+        usuariosRegistrados[0].usuarios = 'usuario';
         writeln('bienvenido a NETFLIX');
         writeln('cargando los contenidos en el sistema...');
-        cargar_datos(cargaDeSeries,usuariosRegistrados);
+        seriesCargadas = cargar_datos(cargaDeSeries,usuariosRegistrados);
         writeln('Carga completa!');
-        
-
-        
 end.
 
 
