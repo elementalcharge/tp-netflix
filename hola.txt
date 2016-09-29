@@ -1,0 +1,73 @@
+program netflix;
+const
+	maxtemporadas=40;
+	maxepisodios=40;
+	maxSeries=10;
+
+type
+tVideo= record
+	
+	titulo: string[72];
+	descripciiion: string[234];
+	duracion: longint;
+	visualizaciones: longint;
+	end;
+ttemporada=record
+episodios: array [1..maxepisodios] of tVideo;
+numepisodioDeTemporada: byte;
+ano:string[4];
+end;
+tserie =record
+nombre: string[71];
+descripcion: string[140];
+cantTemporadas: byte;
+temporadasDeSerie: array[1..maxtemporadas]of ttemporada;
+numeroID:longint;
+{Este id permite ubicar la serie entre las demas y facilitar su busqueda
+y debe ser unico y asignado por la maquina para que no tenga que validarse y
+ longint para prevenir el crecimiento sin tener que cambiarle el tipo de dato
+ luego de un largo tiempo}
+end;
+tvisualizaciones=record
+serieID:longint;
+ultimoEpisodio: byte;
+ultimaTemporada:byte;
+cantVecesVistas: longint;
+end;
+tusuario = record
+usuario:string[8];{necesito validar este dato y revisar que sea minusculas}
+visualizacionesDelUsuario: array[1..maxSeries]of tvisualizaciones;
+
+
+end;
+var opcion:char;
+begin
+writeln('bienvenido a netflix ver. Trabajo Practico');
+writeln('1_elegir serie para ver');
+writeln('2_ver series vistas');{la opcional}
+writeln('3_cambiar usiuario');
+writeln('4_ver todas las visuializaciones');
+writeln('0_salir');
+opcion:='q';
+
+
+while(opcion<>'0') do
+	begin
+	{{$I-}}
+        writeln('priueba');
+	readln(opcion);
+	{{$I+}}
+	        if(IOResult=0)then
+
+			case opcion of
+			'1': writeln('olimar') ;
+			'2': writeln('olimar');
+			'3': writeln('olimar');
+			'4': writeln('olimar');
+			else
+			writeln('olimar');
+			end
+	else
+	writeln('escriba una opcion correcta por favor');
+	end;
+end.
