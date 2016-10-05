@@ -7,9 +7,18 @@ Const
         MAX_SERIES = 5;
         MAX_VISUALIZACIONES_POR_USUARIO = 1000;
         REGLAS_VISUALIZACIONES = 150 * 0.01 + 5 * 0.01 + 4 * 0.03 + 3 * 0.05 + 2 * 0.1;
-
+        {constantes del ranking}
+        cant_top=5;
 type
+        {type del ranking}
+        tranking= record
+        nombreDeSerie : String[150];
+        episodio: String[15];
+        visualizaciones: Integer;
 
+        
+    end;
+    {fin de type del ranking}
 
         videos = record
                 titulo: string[72];
@@ -124,7 +133,45 @@ type
             end;
         end;
 
+        {procedure ranking}
+            procedure verRanking(var metadata:  series);
+var i,j,k, y:byte;
+    top5: array[1..cant_top] of tranking;{copiar lo que sea metadata mejor}
+    aux, aux2: tranking;
 
+begin
+
+        for i:=1 to MAX_SERIES Do{hay poner algo que diga la cantidad de series que hay actualmente}
+        begin
+            for j := 0 to metaData[i].numeroTemporadas do
+            begin
+                for k := 0 to metaData[i].DatosTemporada[j].numeroEpisodios do
+                begin
+                    if top5[cant_top].visualizaciones<metaData[i].DatosTemporada[j].datosDelVideo[k].visualizaciones then{revisa si supera }
+                    begin
+                        aux.episodio:=metaData[i].DatosTemporada[j].datosDelVideo[k].titulo;
+                        aux.nombreDeSerie:=metaData[i].nombre;
+                        aux.visualizaciones:=metaData[i].DatosTemporada[j].datosDelVideo[k].visualizaciones;
+                        for y := 0 to cant_top do
+                        begin
+                        
+                            if aux.visualizaciones> top5[y].visualizaciones then
+                            begin
+                        
+                            aux2:=top5[y];
+                            top5[y]:=aux;
+                            aux:=aux2;
+                            
+                            end;
+                        end;
+                    end;
+                
+                    
+                end;
+            end;
+        end;
+end;
+        {fin procediure ranking}
 var
    cargaDeSeries : array[1..MAX_SERIES] of serie;
    usuariosRegistrados:ArrayInfoPorUsuario    ;
