@@ -49,7 +49,7 @@ type
 
         ArrayInfoPorUsuario = Array[1..MAX_VISUALIZACIONES_POR_USUARIO] of informacionUsuario;
 
-        function cargar_datos(var metaData: series): series ;
+        procedure cargar_datos(var metaData: series);
         begin
 
                 metaData[1].nombre:= 'Los simuladores';
@@ -136,6 +136,7 @@ begin
         usuariosRegistrados[1].usuarios := 'usuario';
         writeln('bienvenido a NETFLIX');
         writeln('cargando los contenidos en el sistema...');
-        seriesCargadas := cargar_datos(cargaDeSeries);
-        writeln('Carga completa!');
+        cargar_datos(cargaDeSeries);
+        writeln(CargaDeSeries[1].nombre);
+        readln(a);
 end.
