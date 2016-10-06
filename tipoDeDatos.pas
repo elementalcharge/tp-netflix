@@ -6,10 +6,10 @@ Const
         MAX_TEMPORADAS_POR_SERIE = 5;
         MAX_SERIES = 5;
         MAX_VISUALIZACIONES_POR_USUARIO = 1000;
-        REGLAS_VISUALIZACIONES = 150 * 0.01 + 5 * 0.01 + 4 * 0.03 + 3 * 0.05 + 2 * 0.1 
+        REGLAS_VISUALIZACIONES = 150 * 0.01 + 5 * 0.01 + 4 * 0.03 + 3 * 0.05 + 2 * 0.1;
 
 type
-        
+
 
         videos = record
                 titulo: string[72];
@@ -49,9 +49,9 @@ type
 
         ArrayInfoPorUsuario = Array[1..MAX_VISUALIZACIONES_POR_USUARIO] of informacionUsuario;
 
-        procedure cargar_datos(var metaData: series, var usuarioDefault: usuarios);
+        procedure cargar_datos(var metaData: series);
         begin
-                usuarioDefault[1] := 'usuario';
+
                 metaData[1].nombre:= 'Los simuladores';
                 metaData[1].descripcion:= 'descripcion de la serie';
                 metaData[1].numeroTemporadas:= 2;
@@ -101,18 +101,25 @@ type
                 metaData[1].DatosTemporada[2].datosDelVideo[5].visualizaciones:= 0;
         end;
 
-        procedure cargar_visualizaciones(var seriesCargadas, var usuario);
-        begin
+        procedure cargar_visualizaciones(var seriesCargadas : series ; var usuario: ArrayInfoPorUsuario);
+
+           var     nroVisualizacionesAGenerar : byte;
+                   i:byte;
+                   temporadaValida:byte;
+                   episodioValido:byte;
+                   serieACargar:byte;
+               begin
             if length(seriesCargadas) > 0 then
-            
+
             begin
                 readln(nroVisualizacionesAGenerar);
-                for i to nroVisualizacionesAGenerar do 
+                for i :=1 to nroVisualizacionesAGenerar do
                 begin
-                    temporadaValida = Random(2);
-                    episodioValido = Random(5);
-                    Inc(seriesCargadas[serieAcargar].DatosTemporada[temporadaValida].datosDelVideo[episodioValido].visualizaciones,  REGLAS_VISUALIZACIONES);
-                    usuario.recordVisualizaciones.CantVisualizaciones = seriesCargadas[serieAcargar].DatosTemporada[temporadaValida].datosDelVideo[episodioValido].visualizaciones;
+                    Randomize       ;
+                    temporadaValida := Random(2);
+                    episodioValido:= Random(5);
+                    Inc(seriesCargadas[serieAcargar].DatosTemporada[temporadaValida].datosDelVideo[episodioValido].visualizaciones, 1);
+                    usuario[1].recordVisualizaciones.CantVisualizaciones := seriesCargadas[serieAcargar].DatosTemporada[temporadaValida].datosDelVideo[episodioValido].visualizaciones;
                 end;
             end;
         end;
@@ -120,18 +127,16 @@ type
 
 var
    cargaDeSeries : array[1..MAX_SERIES] of serie;
-   usuariosRegistrados: array[1..MAX_USUARIOS] of ArrayInfoPorUsuario
-   a, b : integer;
+   usuariosRegistrados:ArrayInfoPorUsuario    ;
+   seriesCargadas : series;
+    a, b : integer;
    inicioDePrograma: integer;
 
 begin
-        usuariosRegistrados[0].usuarios = 'usuario';
+        usuariosRegistrados[1].usuarios := 'usuario';
         writeln('bienvenido a NETFLIX');
         writeln('cargando los contenidos en el sistema...');
-        seriesCargadas = cargar_datos(cargaDeSeries,usuariosRegistrados);
-        writeln('Carga completa!');
+        cargar_datos(cargaDeSeries);
+        writeln(CargaDeSeries[1].nombre);
+        readln(a);
 end.
-
-
-
-
