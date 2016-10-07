@@ -7,9 +7,18 @@ Const
         MAX_SERIES = 5;
         MAX_VISUALIZACIONES_POR_USUARIO = 1000;
         REGLAS_VISUALIZACIONES = 150 * 0.01 + 5 * 0.01 + 4 * 0.03 + 3 * 0.05 + 2 * 0.1;
-
+        {constantes del ranking}
+        cant_top=5;
 type
+        {type del ranking}
+        tranking= record
+        nombreDeSerie : String[150];
+        episodio: String[15];
+        visualizaciones: Integer;
 
+        
+    end;
+    {fin de type del ranking}
 
         videos = record
                 titulo: string[72];
@@ -49,7 +58,44 @@ type
 
         ArrayInfoPorUsuario = Array[1..MAX_VISUALIZACIONES_POR_USUARIO] of informacionUsuario;
 
-        procedure cargar_datos(var metaData: series);
+         Function duracion (duracionSegundos:longint): String;
+            var
+                b,c: byte;
+                bs,cs,ds: string[5];
+                aux: string[10];
+            begin
+                
+                b:=0;
+                c:=0;
+                while duracionSegundos>60 do
+                begin
+                    inc(c);
+                    dec(duracionSegundos,60);
+                end;
+                while c>60 do
+                begin
+                    inc(b);
+                    dec(c,60);
+                end;
+                str(b,bs);
+                str(c,cs);
+                str(duracionSegundos,ds);
+                if duracionSegundos>=10 then
+                begin
+                    
+                
+                    aux:=bs+':'+cs+':'+ds;
+                    else
+                    if (duracionSegundos<10) and (duracionSegundos>0) then
+                    
+                        aux:=bs+':'+cs+':0'+ds
+                    else
+                        aux:=bs+':'+cs+':00' 
+                    end
+                end;
+                duracion:=aux;
+            end;
+         procedure cargar_datos(var metaData: series);
         begin
 
                 metaData[1].nombre:= 'Los simuladores';
@@ -99,6 +145,62 @@ type
                 metaData[1].DatosTemporada[2].datosDelVideo[5].videoDescripcion:= 'S02E05';
                 metaData[1].DatosTemporada[2].datosDelVideo[5].duracionSegundos:= 1800;
                 metaData[1].DatosTemporada[2].datosDelVideo[5].visualizaciones:= 0;
+                {segunda serie}
+                metaData[2].nombre:= 'Friends';
+                metaData[2].descripcion:= 'descripcion de la serie';
+                metaData[2].numeroTemporadas:= 2;
+                metaData[2].DatosTemporada[1].anoEmision:= '1999';
+                metaData[2].DatosTemporada[1].numeroEpisodios:= 13;
+                metaData[2].DatosTemporada[1].datosDelVideo[1].titulo:= 'Tarjeta de Navidad';
+                metaData[2].DatosTemporada[1].datosDelVideo[1].videoDescripcion:= 'S01E01';
+                metaData[2].DatosTemporada[1].datosDelVideo[1].duracionSegundos:= 1800;
+                metaData[2].DatosTemporada[1].datosDelVideo[1].visualizaciones:= 0;
+                metaData[2].DatosTemporada[1].datosDelVideo[2].titulo:= 'Diagnostico Receptopico';
+                metaData[2].DatosTemporada[1].datosDelVideo[2].videoDescripcion:= 'S01E02';
+                metaData[2].DatosTemporada[1].datosDelVideo[2].duracionSegundos:= 1800;
+                metaData[2].DatosTemporada[1].datosDelVideo[2].visualizaciones:= 0;
+                metaData[2].DatosTemporada[1].datosDelVideo[3].titulo:= 'Seguro de Desempleo';
+                metaData[2].DatosTemporada[1].datosDelVideo[3].videoDescripcion:= 'S01E03';
+                metaData[2].DatosTemporada[1].datosDelVideo[3].duracionSegundos:= 1800;
+                metaData[2].DatosTemporada[1].datosDelVideo[3].visualizaciones:= 0;
+                metaData[2].DatosTemporada[1].datosDelVideo[4].titulo:= 'El testigo espanol';
+                metaData[2].DatosTemporada[1].datosDelVideo[4].videoDescripcion:= 'S01E04';
+                metaData[2].DatosTemporada[1].datosDelVideo[4].duracionSegundos:= 1800;
+                metaData[2].DatosTemporada[1].datosDelVideo[4].visualizaciones:= 0;
+                metaData[2].DatosTemporada[1].datosDelVideo[5].titulo:= 'El Joven Simulador';
+                metaData[2].DatosTemporada[1].datosDelVideo[5].videoDescripcion:= 'S01E05';
+                metaData[2].DatosTemporada[1].datosDelVideo[5].duracionSegundos:= 1800;
+                metaData[2].DatosTemporada[1].datosDelVideo[5].visualizaciones:= 0;
+                metaData[2].DatosTemporada[2].anoEmision:= '2003';
+                metaData[2].DatosTemporada[2].numeroEpisodios:= 12;
+                metaData[2].DatosTemporada[2].datosDelVideo[1].titulo:= 'Los Cuatro Notables';
+                metaData[2].DatosTemporada[2].datosDelVideo[1].videoDescripcion:= 'S02E01';
+                metaData[2].DatosTemporada[2].datosDelVideo[1].duracionSegundos:= 1800;
+                metaData[2].DatosTemporada[2].datosDelVideo[1].visualizaciones:= 0;
+                metaData[2].DatosTemporada[2].datosDelVideo[2].titulo:= 'Z-9000';
+                metaData[2].DatosTemporada[2].datosDelVideo[2].videoDescripcion:= 'S02E02';
+                metaData[2].DatosTemporada[2].datosDelVideo[2].duracionSegundos:= 1800;
+                metaData[2].DatosTemporada[2].datosDelVideo[2].visualizaciones:= 0;
+                metaData[2].DatosTemporada[2].datosDelVideo[3].titulo:= 'La Gargantilla de las Cuatro Estaciones';
+                metaData[2].DatosTemporada[2].datosDelVideo[3].videoDescripcion:= 'S02E03';
+                metaData[2].DatosTemporada[2].datosDelVideo[3].duracionSegundos:= 1800;
+                metaData[2].DatosTemporada[2].datosDelVideo[3].visualizaciones:= 0;
+                metaData[2].DatosTemporada[2].datosDelVideo[4].titulo:= 'El Clan Motul';
+                metaData[2].DatosTemporada[2].datosDelVideo[4].videoDescripcion:= 'S02E04';
+                metaData[2].DatosTemporada[2].datosDelVideo[4].duracionSegundos:= 1800;
+                metaData[2].DatosTemporada[2].datosDelVideo[4].visualizaciones:= 0;
+                metaData[2].DatosTemporada[2].datosDelVideo[5].titulo:= 'El Vengador Infantil';
+                metaData[2].DatosTemporada[2].datosDelVideo[5].videoDescripcion:= 'S02E05';
+                metaData[2].DatosTemporada[2].datosDelVideo[5].duracionSegundos:= 1800;
+                metaData[2].DatosTemporada[2].datosDelVideo[5].visualizaciones:= 0;
+
+                {}
+                {prueba de carga de datos chequeo}
+                {writeln(metaData[1].nombre);
+                writeln(metaData[1].DatosTemporada[2].datosDelVideo[5].visualizaciones);
+                writeln( metaData[1].numeroTemporadas);}
+                
+
         end;
 
         procedure cargar_visualizaciones(var seriesCargadas : series ; var usuario: ArrayInfoPorUsuario);
@@ -110,33 +212,227 @@ type
                    serieACargar:byte;
                begin
             if length(seriesCargadas) > 0 then
-
+                
             begin
+                writeln('indique visualizaciones a generar');
                 readln(nroVisualizacionesAGenerar);
                 for i :=1 to nroVisualizacionesAGenerar do
                 begin
-                    Randomize       ;
-                    temporadaValida := Random(2);
-                    episodioValido:= Random(5);
+                    {Randomize       ;}
+                    serieACargar:=1;
+                    temporadaValida := Random(1);
+                    episodioValido:= Random(4);
+                    inc(temporadaValida,1);
+                    Inc(episodioValido,1);
+                   {con el inc le prevengo de que tire 0 y rompa el programa y al al ponerle -1 a la cantidad que tiene evito que se salga del array}
+                    
                     Inc(seriesCargadas[serieAcargar].DatosTemporada[temporadaValida].datosDelVideo[episodioValido].visualizaciones, 1);
                     usuario[1].recordVisualizaciones.CantVisualizaciones := seriesCargadas[serieAcargar].DatosTemporada[temporadaValida].datosDelVideo[episodioValido].visualizaciones;
                 end;
             end;
+            
         end;
+        {explorador de series}
+procedure explorador(var metadata:  series; seriesCargadas:byte);
+var
+            seleccion: string[1];
+            aux, aux2,aux3,i,j,k: byte;
 
+begin
+    aux:=0;
+    aux2:=0;
+    aux3:=0;
 
+    while seleccion<>'0' do
+    begin
+        
+     writeln('elija serie que desea ver o 0 para salir');
+        for i := 1 to seriesCargadas-1 do
+        begin
+         writeln(i);
+         
+         writeln(' serie: ',metadata[i].nombre);
+         
+            
+        end;
+        
+       writeln('ahora elija');
+        {{$I-}}
+        readln(seleccion);
+        {{$I+}}
+        if(IOResult=0)then
+        
+            case seleccion of
+            '1': aux:=1 ;
+            '2':aux:=2;
+            '3': aux:=3;
+            '4': aux:=4;
+            '5': aux:=5;
+            '0':;
+            else
+            writeln('elija una opcion correcta');
+            end
+    
+            else
+           
+            end;
+            writeln('elija una temporada');
+            for i := 1 to metadata[aux].numeroTemporadas-1 do
+            begin
+             writeln(i);
+             writeln(metadata[aux].nombre);
+             writeln(metadata[aux].numeroTemporadas);
+             writeln('aca hay temporada', metadata[aux].DatosTemporada[i].anoEmision);
+             readln();
+                writeln(i,'',metadata[aux].nombre);
+            end;
+
+             {{$I-}}
+            readln(seleccion);
+            {{$I+}}
+            if(IOResult=0)then
+        
+            case seleccion of
+            '1': aux2:=1 ;
+            '2':aux2:=2;
+            '3': aux2:=3;
+            '4': aux2:=4;
+            '5': aux2:=5;
+            '0':;
+            else
+            writeln('elija una opcion correcta');
+            end
+    
+            else
+            writeln('elija un episodio');
+            for i := 1 to metadata[aux].DatosTemporada[aux2].numeroEpisodios do
+            begin
+             writeln(i);
+             writeln(metadata[aux].DatosTemporada[aux2].numeroEpisodios);
+             writeln('episodio', metadata[aux].DatosTemporada[aux2].datosDelVideo[i].titulo);
+             writeln('duracion',duracion(metadata[aux].DatosTemporada[aux2].datosDelVideo[i].duracionSegundos));
+             writeln('visto', metadata[aux].DatosTemporada[aux2].datosDelVideo[i].visualizaciones);
+             readln();
+               
+            end;
+
+            
+     
+    
+end;
+   
+        {procedure ranking}
+            procedure verRanking(var metaData:  series; var seriesCargadas: byte);
+var i,j,k, y:byte;
+    top5: array[1..cant_top] of tranking;{copiar lo que sea metadata mejor}
+    aux, aux2: tranking;
+
+begin
+    for i := 1 to cant_top do
+        begin
+
+           top5[i].episodio:='nada';
+           top5[i].nombreDeSerie:='sin nombre';
+           top5[i].visualizaciones:=0;
+           
+        end;
+        for i:=1 to seriesCargadas Do{hay poner algo que diga la cantidad de series que hay actualmente}
+        begin
+        
+        
+            for j := 1 to metaData[i].numeroTemporadas do
+            begin
+            
+           
+                for k := 1 to metaData[i].DatosTemporada[j].numeroEpisodios do
+                begin
+               
+                
+                    if top5[cant_top].visualizaciones<metaData[i].DatosTemporada[j].datosDelVideo[k].visualizaciones then{revisa si supera }
+                    begin
+                        
+                        aux.episodio:=metaData[i].DatosTemporada[j].datosDelVideo[k].titulo;
+                        aux.nombreDeSerie:=metaData[i].nombre;
+                        aux.visualizaciones:=metaData[i].DatosTemporada[j].datosDelVideo[k].visualizaciones;
+                        for y := 1 to cant_top-1 do
+                        begin
+                            
+                            if aux.visualizaciones> top5[y].visualizaciones then
+                            begin
+                        
+                            aux2:=top5[y];
+                           top5[y]:=aux;
+                            aux:=aux2;
+                            
+                            end;
+                        end;
+                    end;
+                
+                    
+                end;
+            end;
+        end;
+        for i := 1 to cant_top-1 do
+        begin
+            writeln('puesto ',i, '',top5[i].nombreDeSerie,'',top5[i].episodio);
+            writeln('visto:', top5[i].visualizaciones);
+        end;
+end;
+        {fin procediure ranking}
 var
    cargaDeSeries : array[1..MAX_SERIES] of serie;
    usuariosRegistrados:ArrayInfoPorUsuario    ;
    seriesCargadas : series;
     a, b : integer;
    inicioDePrograma: integer;
+{variable de pantalla}
+   var opcion:char;
+        seriesEnNetflix:byte;
 
 begin
         usuariosRegistrados[1].usuarios := 'usuario';
         writeln('bienvenido a NETFLIX');
         writeln('cargando los contenidos en el sistema...');
         cargar_datos(cargaDeSeries);
-        writeln(CargaDeSeries[1].nombre);
-        readln(a);
+        writeln(CargaDeSeries[1].DatosTemporada[1].numeroEpisodios);
+       
+
+        {inicio de pantalla}
+        seriesEnNetflix:=length(seriesCargadas);
+        writeln('bienvenido a netflix ver. Trabajo Practico');
+writeln('1_elegir serie para ver');
+writeln('2_cargar visuializaciones');{la opcional}
+writeln('3_ver top 5 series');
+writeln('4_ver todas las visuializaciones');
+writeln('0_salir');
+opcion:='9';
+writeln('nombre de serie ',cargaDeSeries[1].nombre);
+                writeln(cargaDeSeries[1].DatosTemporada[2].datosDelVideo[5].visualizaciones);
+                writeln( cargaDeSeries[1].numeroTemporadas);
+
+while(opcion<>'0') do
+    begin
+    {{$I-}}
+    readln(opcion);
+    {{$I+}}
+    if(IOResult=0)then
+        
+            case opcion of
+            '1': explorador(cargaDeSeries,seriesEnNetflix) ;
+            '2': cargar_visualizaciones(cargaDeSeries,usuariosRegistrados);
+            '3': verRanking(cargaDeSeries,seriesEnNetflix);
+            '4': writeln('olimar');
+            else
+            writeln('escriba una opcion correcta por favor');
+            end
+    
+    else
+    writeln();{agregado porque por alguna razon se come el primer writeln cuando esta en el ciclo}
+    writeln('1_elegir serie para ver');
+    writeln('2_ver series vistas');{la opcional}
+    writeln('3_ver top 5 series');
+    writeln('4_ver todas las visuializaciones');
+    writeln('0_salir');
+    end;
+    {fin de pantalla}
 end.
